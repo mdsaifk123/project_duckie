@@ -1,10 +1,11 @@
 <launch>
-  <group ns="$(env VEHICLE_NAME)">
-    <node pkg="lab_2" name="lab_2" type="drive_square.py"/>
-  </group>
-  <include file="$(find fsm)/launch/fsm_node.launch">
-  	<arg name="veh" value="$(env VEHICLE_NAME)"/>
-  	<arg name="param_file_name" value="lane_following"/>
-     </include>
-</launch>
 
+  <group ns="$(env VEHICLE_NAME)">
+    <node pkg="lab_2" name="drive_square_1" type="drive_square_1.py"/>
+  </group>
+
+  <include file="$(find fsm)/launch/fsm_node.launch">
+    <arg name="veh" value="$(env VEHICLE_NAME)"/>
+    <arg name="param_file_name" value="lane_following"/>
+  </include>
+</launch>

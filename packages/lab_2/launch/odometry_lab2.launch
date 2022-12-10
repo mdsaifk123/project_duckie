@@ -1,0 +1,42 @@
+<launch>
+  <!--include file="$(find fsm)/launch/fsm_node.launch">
+    <arg name="veh" value="$(env VEHICLE_NAME)"/>
+    <arg name="param_file_name" value="lane_following"/>
+  </include-->
+
+  <include file="$(find anti_instagram)/launch/anti_instagram_node.launch">
+      <arg name="veh" value="$(env VEHICLE_NAME)"/>
+  </include>
+
+  <include file="$(find line_detector)/launch/line_detector_node.launch">
+      <arg name="veh" value="$(env VEHICLE_NAME)"/>
+  </include>
+
+
+  <include file="$(find lane_filter)/launch/lane_filter_node.launch">
+      <arg name="veh" value="$(env VEHICLE_NAME)"/>
+  </include>
+
+  <include file="$(find ground_projection)/launch/ground_projection_node.launch">
+      <arg name="veh" value="$(env VEHICLE_NAME)"/>
+  </include>
+
+
+  <include file="$(find led_emitter)/launch/led_emitter_node.launch">
+      <arg name="veh" value="$(env VEHICLE_NAME)"/>
+  </include>
+
+
+  <remap from="fsm_node/set_pattern" to="led_emitter_node/set_pattern"/>
+  <include file="$(find fsm)/launch/fsm_node.launch">
+      <arg name="veh" value="$(env VEHICLE_NAME)"/>
+      <arg name="param_file_name" value="lane_following"/>
+  </include>
+
+
+  <group ns="$(env VEHICLE_NAME)">
+    <node pkg="lab_2" name="odometry_lab2" type="odometry_lab2.py"/>
+    <node pkg="lab_2" name="drive_square_1" type="drive_square_1.py"/>
+   
+  </group>
+</launch>

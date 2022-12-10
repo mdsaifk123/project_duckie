@@ -4,7 +4,7 @@ import rospy
 from std_msgs.msg import Float32, String
 from duckietown_msgs.msg import Twist2DStamped 
 
-class Move_Square:
+class drive_Square:
     def __init__(self):
 
         # publishes to the output of car_cmd_switch_node 
@@ -19,22 +19,20 @@ class Move_Square:
 
 if __name__ == '__main__':
     try:
-        run_sq = Run_Square()
-        rospy.init_node('run_square_node', anonymous=True)
+        drive_sq = drive_Square()
+        rospy.init_node('drive_square_1', anonymous=True)
 
-        time_straight = 3.0 # edit straight driving time here
-        time_spin = 0.4 # edit body rotating time here
-        run_vel = 0.40 # velocity of straight drive
-        spin_omega = 5.0 # angular velocity used for spinning (negative spins clockwise)
+        time_straight = 3.2 # edit straight driving time here
+        time_spin = 0.25 # edit body rotating time here
+        run_vel = 0.50 # velocity of straight drive
+        spin_omega = 2 # angular velocity used for spinning (negative spins clockwise)
 
         # drive straight for n seconds, then turn. Repeat 4 times
         for i in range(4):
-            run_sq.send_motor_msg(run_vel, 0) # edit velocity and omega values here
+            drive_sq.send_motor_msg(run_vel, 0) # edit velocity and omega values here
             rospy.sleep(time_straight)
-            run_sq.send_motor_msg(0, spin_omega) # spin 45 degrees
+            drive_sq.send_motor_msg(0, spin_omega) # spin 45 degrees
             rospy.sleep(time_spin)
-            run_sq.send_motor_msg(0, 0) # stops all motors
+            drive_sq.send_motor_msg(0, 0) # stops all motors
     except rospy.ROSInterruptException:
-            Move_Square()
             pass
-
