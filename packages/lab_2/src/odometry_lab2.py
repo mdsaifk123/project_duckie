@@ -11,8 +11,8 @@ from odometry_hw.msg import Pose2D
 class Odometry_lab2:
 
 
-    input_topic = "dist_wheel"
-    output_topic = "pose"
+    input_topic = "/instructobot00/dist_wheel"
+    output_topic = "/instructobot/pose"
 
     dist_between_wheels = 0.1 # in meters
     last_measure_time = 0.0

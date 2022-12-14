@@ -30,7 +30,7 @@ class AprilControl:
     def __init__(self):
         # manually tuned
         # initialize the PID class
-        self.control_signal = PIDController()
+        self.control_signal = PIDController(1,1,1)
         #self.linear_controller = PIDController()
 
         # bind the input/output publishers and subcripbers
@@ -88,7 +88,7 @@ class AprilControl:
         omega_signal = 0.0
         v_signal = 0.0
         if(abs(angle_error) > self.min_angle_error):
-            Kp = 1.8
+            Kp = 0.8
             Ki = 0.01
             Kd = 0.02
             omega_signal = self.control_signal.get_control_signal_from_error(angle_error, Kp, Ki, Kd)
@@ -102,6 +102,6 @@ class AprilControl:
         
 if __name__ == '__main__':
     rospy.init_node('april_control')
-    a = AprilControl()
+    AprilControl()
     # keep python from exiting
     rospy.spin()
