@@ -28,7 +28,7 @@
     <arg name="/lane_following/lane_controller" value="false"/>
   </include>
 
-  <include file="$(find anti_instagram)/launch/anti_instagram_node.launch">
+  <!--include file="$(find anti_instagram)/launch/anti_instagram_node.launch">
       <arg name="veh" value="$(env VEHICLE_NAME)"/>
   </include>
 
@@ -55,7 +55,7 @@
   <include file="$(find fsm)/launch/fsm_node.launch">
       <arg name="veh" value="$(env VEHICLE_NAME)"/>
       <arg name="param_file_name" value="lane_following"/>
-  </include>
+  </include-->
 
   <group ns="$(env VEHICLE_NAME)">
     <node pkg="lab_4" name="control_detector" type="control_detector.py"/>
