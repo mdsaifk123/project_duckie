@@ -30,8 +30,8 @@ class AprilControl:
     def __init__(self):
         # manually tuned
         # initialize the PID class
-        self.control_signal = PIDController(1,1,1)
-        #self.linear_controller = PIDController()
+        self.angular_controller = PIDController(2.8,0.01,0.05)
+        self.linear_controller = PIDController(1.25,0.003,0.06)
 
         # bind the input/output publishers and subcripbers
         self.bind_io()
@@ -88,15 +88,9 @@ class AprilControl:
         omega_signal = 0.0
         v_signal = 0.0
         if(abs(angle_error) > self.min_angle_error):
-            Kp = 0.8
-            Ki = 0.01
-            Kd = 0.02
-            omega_signal = self.control_signal.get_control_signal_from_error(angle_error, Kp, Ki, Kd)
+            omega_signal = self.angular_controller.get_control_signal_from_error(angle_error)
         if(abs(linear_error) > self.min_linear_error):
-            Kp = 0.75
-            Ki = 0.003
-            Kd = 0.06
-            v_signal = self.control_signal.get_control_signal_from_error(linear_error, Kp, Ki, Kd)
+            v_signal = self.linear_controller.get_control_signal_from_error(linear_error)
         self.publish_car_cmd(-v_signal, omega_signal)
 
         

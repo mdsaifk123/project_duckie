@@ -3,10 +3,9 @@
 import sys, math
 import numpy as np
 import rospy
-import cv2
 
 
-from pid_controller import PIDController
+from pid_control import PIDController
 
 # from geometry_msgs.msg import PoseStamped
 
@@ -23,16 +22,16 @@ class lanecontroller:
 
     following = False
 
-    input_fsm_mode = "fsm_node/mode"
-    input_lane_pose = "lane_filter_node/lane_pose"
+    input_fsm_mode = "/instructobot00/fsm_node/mode"
+    input_lane_pose = "/instructobot00/lane_filter_node/lane_pose"
 
     # output_car_cmd = "lane_controller_node/car_cmd"
-    output_car_cmd = "car_cmd_switch_node/cmd"
+    output_car_cmd = "/instructobot00/car_cmd_switch_node/cmd"
 
     def __init__(self):
-        self.angle_pid = PIDController()
+        self.angle_pid = PIDController(3.5,0.4,0.3)
         # bind the input/output publishers and subcripbers
-        self.bind_io();
+        self.bind_io()
 
     def bind_io(self):
         # subscribe the callback functions to the designated input topic
@@ -42,7 +41,7 @@ class lanecontroller:
         self.pub = rospy.Publisher(self.output_car_cmd, Twist2DStamped, queue_size=10)
 
     def receive_lane_pose(self, msg):
-        # if(self.following):
+        #if(self.following):
         rospy.loginfo("lane controller node received msg: " + str(msg))
         observed_d = msg.d
         observed_phi = msg.phi
@@ -58,7 +57,7 @@ class lanecontroller:
         output_data.v = v
         output_data.omega = omega
         # publish the car command to the output topic
-        self.pub.publish(output_data)
+        self.pub.publish(v,omega)
 
 
     def handle_errors(self, phi_error, distance_error):
@@ -69,11 +68,11 @@ class lanecontroller:
             angle_error = angle_error + phi_error
 
         # manually tuned
-        Kp = 3.6
-        Ki = 0.0
-        Kd = 0.02
-        omega_signal = self.angle_pid.get_control_signal_from_error(angle_error, Kp, Ki, Kd)
-        self.publish_car_cmd(0.24, omega_signal)
+        #Kp = 3.6
+        #Ki = 0.0
+        #Kd = 0.02
+        omega_signal = self.angle_pid.get_control_signal_from_error(angle_error)
+        self.publish_car_cmd(0.5, omega_signal)
 
     def receive_fsm_mode(self, msg):
         rospy.loginfo("lane-controller-node received msg from fsm_node: " + str(msg))

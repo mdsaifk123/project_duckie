@@ -29,7 +29,7 @@ class CustomLaneDetectorNode:
         # initialize the OpenCV bridge
         self.bridge = CvBridge()
         # bind the input/output publishers and subcripbers
-        self.bind_io();
+        self.bind_io()
 
     def bind_io(self):
         # subscribe the callback functions to the designated input topic

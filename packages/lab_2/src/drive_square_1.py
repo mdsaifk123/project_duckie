@@ -28,7 +28,7 @@ if __name__ == '__main__':
         spin_omega = 2 # angular velocity used for spinning (negative spins clockwise)
 
         # drive straight for n seconds, then turn. Repeat 4 times
-        for i in range(4):
+        for i in range(12):
             drive_sq.send_motor_msg(run_vel, 0) # edit velocity and omega values here
             rospy.sleep(time_straight)
             drive_sq.send_motor_msg(0, spin_omega) # spin 45 degrees
