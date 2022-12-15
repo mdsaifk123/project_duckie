@@ -5,7 +5,7 @@
   <arg name="ai_interval" default="5" doc="interval with which the linear trafo gets updated. color balance is performed every second."/>
   <arg name="verbose" default="false"/>
   <!-- start Duckietown nodes -->
-  <arg name="demo_name" value="lane_following"/>
+  <!-- arg name="demo_name" value="lane_following"/-->
   <!-- start basic args -->
   <include file="$(find duckietown_demos)/launch/master.launch">
     <!--Basic arguments -->
@@ -14,8 +14,8 @@
     <arg name="param_file_name" value="default"/>
     <arg name="visualization" value="true"/>
     <!-- Finite state machine -->
-    <arg name="fsm" value="true"/>
-    <arg name="/fsm/logic_gate" value="false"/>
+    <!--arg name="fsm" value="true"/ -->
+    <!--arg name="/fsm/logic_gate" value="false"/-->
     <!-- Camera and anti intagram -->
     <arg name="/camera/raw" value="false"/>
     <arg name="anti_instagram" value="true"/>
@@ -48,14 +48,14 @@
 
   <include file="$(find led_emitter)/launch/led_emitter_node.launch">
       <arg name="veh" value="$(env VEHICLE_NAME)"/>
-  </include>
+  </include-->
 
 
   <remap from="fsm_node/set_pattern" to="led_emitter_node/set_pattern"/>
   <include file="$(find fsm)/launch/fsm_node.launch">
       <arg name="veh" value="$(env VEHICLE_NAME)"/>
       <arg name="param_file_name" value="lane_following"/>
-  </include-->
+  </include>
 
   <group ns="$(env VEHICLE_NAME)">
     <node pkg="lab_4" name="control_detector" type="control_detector.py"/>
