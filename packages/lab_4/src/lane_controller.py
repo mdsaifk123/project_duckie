@@ -17,8 +17,8 @@ class lanecontroller:
     desired_d = 0.0
     desired_phi = 0.0
 
-    min_phi_error = 0.1
-    min_d_error = 0.07
+    min_phi_error = 0.01
+    min_d_error = 0.06
 
     following = False
 
@@ -29,7 +29,7 @@ class lanecontroller:
     output_car_cmd = "/instructobot00/car_cmd_switch_node/cmd"
 
     def __init__(self):
-        self.angle_pid = PIDController(3.5,0,0.03)
+        self.angle_pid = PIDController(3.5,0.0,0.03)
         # bind the input/output publishers and subcripbers
         self.bind_io()
 
@@ -69,7 +69,7 @@ class lanecontroller:
             angle_error = angle_error + phi_error
 
         omega_signal = self.angle_pid.get_control_signal_from_error(angle_error)
-        self.publish_car_cmd(0.65, omega_signal)
+        self.publish_car_cmd(0.22, omega_signal)
 
     def receive_fsm_mode(self, msg):
         rospy.loginfo("lane-controller-node received msg from fsm_node: " + str(msg))
