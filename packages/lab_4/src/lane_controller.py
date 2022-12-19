@@ -69,7 +69,7 @@ class lanecontroller:
             angle_error = angle_error + phi_error
 
         omega_signal = self.angle_pid.get_control_signal_from_error(angle_error)
-        self.publish_car_cmd(0.22, omega_signal)
+        self.publish_car_cmd(0.20, omega_signal)
 
     def receive_fsm_mode(self, msg):
         rospy.loginfo("lane-controller-node received msg from fsm_node: " + str(msg))
